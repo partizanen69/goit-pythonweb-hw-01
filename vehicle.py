@@ -13,8 +13,7 @@ class Vehicle(ABC):
 
 class Car(Vehicle):
     def __init__(self, make: str, model: str) -> None:
-        self.make: str = make
-        self.model: str = model
+        super().__init__(make, model)
 
     def start_engine(self) -> None:
         print(f"{self.make} {self.model}: Двигун запущено")
@@ -22,8 +21,7 @@ class Car(Vehicle):
 
 class Motorcycle(Vehicle):
     def __init__(self, make: str, model: str) -> None:
-        self.make: str = make
-        self.model: str = model
+        super().__init__(make, model)
 
     def start_engine(self) -> None:
         print(f"{self.make} {self.model}: Мотор заведено")
