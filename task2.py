@@ -1,4 +1,7 @@
 from abc import ABC, abstractmethod
+from logger import logger, setup_logging
+
+setup_logging()
 
 
 class Book:
@@ -20,8 +23,14 @@ class LibraryInterface(ABC):
     def remove_book(self, title: str) -> None:
         pass
 
+    @abstractmethod
+    def show_books(self) -> None:
+        pass
+
 
 class LibraryManager:
+    library: LibraryInterface
+
     def __init__(self, library: LibraryInterface) -> None:
         self.library: LibraryInterface = library
 
@@ -42,6 +51,7 @@ class Library(LibraryInterface):
     def add_book(self, title: str, author: str, year: int) -> None:
         book: Book = Book(title, author, year)
         self.books.append(book)
+        logger.info(f"Книга '{title}' додана до бібліотеки")
 
     def remove_book(self, title: str) -> None:
         for book in self.books:
@@ -51,7 +61,7 @@ class Library(LibraryInterface):
 
     def show_books(self) -> None:
         for book in self.books:
-            print(book.info())
+            logger.info(book.info())
 
 
 def main():
@@ -65,21 +75,21 @@ def main():
             case "add":
                 title = input("Enter book title: ").strip()
                 if not title:
-                    print("Error: Book title cannot be empty")
+                    logger.info("Error: Book title cannot be empty")
                     continue
 
                 author = input("Enter book author: ").strip()
                 if not author:
-                    print("Error: Author name cannot be empty")
+                    logger.info("Error: Author name cannot be empty")
                     continue
 
                 try:
                     year = int(input("Enter book year: ").strip())
                     if year <= 0:
-                        print("Error: Year must be a positive number")
+                        logger.info("Error: Year must be a positive number")
                         continue
                 except ValueError:
-                    print("Error: Year must be a valid number")
+                    logger.info("Error: Year must be a valid number")
                     continue
 
                 manager.add_book(title, author, year)
@@ -91,7 +101,7 @@ def main():
             case "exit":
                 break
             case _:
-                print("Invalid command. Please try again.")
+                logger.info("Invalid command. Please try again.")
 
 
 if __name__ == "__main__":

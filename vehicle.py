@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from logger import logger
 
 
 class Vehicle(ABC):
@@ -16,7 +17,7 @@ class Car(Vehicle):
         super().__init__(make, model)
 
     def start_engine(self) -> None:
-        print(f"{self.make} {self.model}: Двигун запущено")
+        logger.info(f"{self.make} {self.model}: Двигун запущено")
 
 
 class Motorcycle(Vehicle):
@@ -24,4 +25,4 @@ class Motorcycle(Vehicle):
         super().__init__(make, model)
 
     def start_engine(self) -> None:
-        print(f"{self.make} {self.model}: Мотор заведено")
+        logger.info(f"{self.make} {self.model}: Мотор заведено")
